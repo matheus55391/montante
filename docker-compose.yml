@@ -1,0 +1,9 @@
+services:
+  montante:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_IMAGE:-montante:local}
+    ports:
+      - "${APP_PORT:-8080}:80"
+    restart: unless-stopped

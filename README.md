@@ -45,3 +45,26 @@ O formulário aceita taxa/período em unidade mensal ou anual. A conversão fica
 ## Formulário
 
 Grid 2×2: valor inicial + taxa | período + investimento mensal. Campos monetários e percentuais com máscara pt-BR.
+
+## Docker
+
+```bash
+cp .env.example .env
+docker compose up --build -d   # http://localhost:8080
+docker compose down
+```
+
+Publicar no Docker Hub:
+
+```bash
+docker login
+export DOCKERHUB_USER=seuusuario
+docker build -t $DOCKERHUB_USER/montante:latest .
+docker push $DOCKERHUB_USER/montante:latest
+```
+
+Rodar a imagem publicada:
+
+```bash
+docker run --rm -p 8080:80 seuusuario/montante:latest
+```

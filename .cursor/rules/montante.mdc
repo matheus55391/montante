@@ -24,4 +24,4 @@ Calculadora de juros compostos com aporte mensal. React + TS + Vite + Bun.
 
 ## Comandos
 
-`bun dev` · `bun run test:run` · `bun run build`
+`bun dev` · `bun run test:run` · `bun run build` · `docker compose up --build`
