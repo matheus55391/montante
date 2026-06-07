@@ -1,0 +1,27 @@
+---
+description: Contexto do projeto Montante (calculadora de juros compostos)
+alwaysApply: true
+---
+
+# Montante
+
+Calculadora de juros compostos com aporte mensal. React + TS + Vite + Bun.
+
+## Arquitetura
+
+- **Lógica desacoplada da UI** em `src/lib/compound-interest/`
+- **Schemas** em `src/schemas/` — um arquivo por schema, com teste colocado
+- **Componentes** em `src/components/` (calculator + ui)
+- **Testes** colocados junto ao código; `src/__tests__/` só para setup Vitest
+
+## Convenções
+
+- Alias `@/` → `src/`
+- Máscaras pt-BR: `parse-currency-input.ts`, `parse-percent-input.ts`
+- Form → cálculo via `toCompoundInterestInput()` (converte taxa/período anual)
+- Não criar pasta `features/`
+- Manter diffs focados; evitar over-engineering
+
+## Comandos
+
+`bun dev` · `bun run test:run` · `bun run build`

@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# Montante
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Calculadora de juros compostos com aporte mensal. Simula patrimônio final, total investido, juros e evolução mês a mês.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript + Vite 8
+- Tailwind CSS v4
+- react-hook-form + Zod
+- Recharts
+- Vitest + Testing Library
+- Bun (gerenciador de pacotes)
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+bun dev          # desenvolvimento
+bun run build    # build de produção
+bun run test     # testes (watch)
+bun run test:run # testes (CI)
+bun run lint     # eslint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estrutura
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── components/calculator/   # UI da calculadora
+├── components/ui/           # primitivos (input, button, select…)
+├── schemas/                 # validação Zod (1 schema por arquivo + teste)
+├── lib/
+│   ├── compound-interest/   # lógica de cálculo (sem UI)
+│   ├── calculator/          # conversão form → input da lib
+│   ├── currency/            # formatBRL e máscaras monetárias
+│   └── format/              # máscara percentual
+└── __tests__/setup.ts       # setup global do Vitest
+```
+
+## Lógica de negócio
+
+A simulação em `calculateCompoundInterest` aplica juros sobre o patrimônio acumulado e soma o aporte ao final de cada mês.
+
+O formulário aceita taxa/período em unidade mensal ou anual. A conversão fica em `to-compound-interest-input.ts` (taxa anual → mensal equivalente composta).
+
+## Formulário
+
+Grid 2×2: valor inicial + taxa | período + investimento mensal. Campos monetários e percentuais com máscara pt-BR.
